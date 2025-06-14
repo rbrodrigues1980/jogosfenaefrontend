@@ -19,7 +19,10 @@ export interface EditionDto {
   providedIn: 'root'
 })
 export class EditionApi {
-  private baseUrl = '/api/rest/v1/edition';
+  // Base URL of the edition API on the backend server.
+  // Using the absolute address avoids 404 errors when the
+  // Angular dev server runs on a different port (e.g. 4200).
+  private baseUrl = 'http://localhost:8080/api/rest/v1/edition';
 
   constructor(private http: HttpClient) {}
 
