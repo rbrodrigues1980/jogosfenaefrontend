@@ -43,11 +43,6 @@
     </mat-form-field>
   </div>
 
-    <div class="full-width">
-      <label class="ckeditor-label">Descrição</label>
-      <ckeditor [editor]="Editor" formControlName="description"></ckeditor>
-    </div>
-
   <div class="row">
     <mat-form-field appearance="fill" class="flex">
       <mat-label>Email</mat-label>
@@ -55,6 +50,16 @@
     </mat-form-field>
     <mat-checkbox formControlName="currentEdition">Atual</mat-checkbox>
   </div>
+
+  <div class="row">
+<div class="full-width">
+      <label class="ckeditor-label">Descrição</label>
+      <ckeditor [editor]="Editor" formControlName="description"></ckeditor>
+    </div>
+  </div>
+
+
+
 
   </div>
   <div mat-dialog-actions align="end" class="actions">
