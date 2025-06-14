@@ -21,8 +21,8 @@
       <tbody>
         <tr *ngFor="let e of editions">
           <td>{{ e.title }}</td>
-          <td>{{ e.startDateTime }}</td>
-          <td>{{ e.endDateTime }}</td>
+          <td>{{ e.startDateTime | date:"dd/MM/yyyy HH'h'mm":'' : 'pt-BR' }}</td>
+          <td>{{ e.endDateTime | date:"dd/MM/yyyy HH'h'mm":'' : 'pt-BR' }}</td>
           <td>
             <button (click)="edit(e)">Editar</button>
             <button (click)="delete(e)">Excluir</button>
