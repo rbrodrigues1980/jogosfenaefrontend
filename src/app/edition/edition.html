@@ -1,0 +1,71 @@
+<div class="container">
+  <nav class="menu">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Edições</a></li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <button (click)="add()">Adicionar</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Início</th>
+          <th>Fim</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of editions">
+          <td>{{ e.title }}</td>
+          <td>{{ e.startDateTime }}</td>
+          <td>{{ e.endDateTime }}</td>
+          <td>
+            <button (click)="edit(e)">Editar</button>
+            <button (click)="delete(e)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="showForm" class="form">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <label>
+          Título:
+          <input formControlName="title" />
+        </label>
+        <label>
+          Descrição:
+          <input formControlName="description" />
+        </label>
+        <label>
+          Email:
+          <input formControlName="email" />
+        </label>
+        <label>
+          Data de Associação:
+          <input formControlName="membershipDate" type="date" />
+        </label>
+        <label>
+          Início:
+          <input formControlName="startDateTime" type="datetime-local" />
+        </label>
+        <label>
+          Fim:
+          <input formControlName="endDateTime" type="datetime-local" />
+        </label>
+        <label>
+          Atual:
+          <input formControlName="currentEdition" type="checkbox" />
+        </label>
+        <div class="actions">
+          <button type="submit">Salvar</button>
+          <button type="button" (click)="cancel()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
