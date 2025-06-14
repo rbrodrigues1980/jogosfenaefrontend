@@ -19,3 +19,10 @@
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
+.ckeditor-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}

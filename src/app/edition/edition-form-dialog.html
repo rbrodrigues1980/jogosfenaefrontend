@@ -1,8 +1,10 @@
+<h2 mat-dialog-title>{{ data.edition ? 'Editar Edição' : 'Nova Edição' }}</h2>
 <form [formGroup]="form" class="dialog-form" (ngSubmit)="save()">
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Título</mat-label>
-    <input matInput formControlName="title" />
-  </mat-form-field>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
 
   <div class="row">
     <mat-form-field appearance="fill">
@@ -41,10 +43,10 @@
     </mat-form-field>
   </div>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Descrição</mat-label>
-    <ckeditor formControlName="description"></ckeditor>
-  </mat-form-field>
+    <div class="full-width">
+      <label class="ckeditor-label">Descrição</label>
+      <ckeditor formControlName="description"></ckeditor>
+    </div>
 
   <div class="row">
     <mat-form-field appearance="fill" class="flex">
@@ -54,7 +56,8 @@
     <mat-checkbox formControlName="currentEdition">Atual</mat-checkbox>
   </div>
 
-  <div class="actions">
+  </div>
+  <div mat-dialog-actions align="end" class="actions">
     <button mat-raised-button color="primary" type="submit">Salvar</button>
     <button mat-button type="button" (click)="cancel()">Cancelar</button>
   </div>
