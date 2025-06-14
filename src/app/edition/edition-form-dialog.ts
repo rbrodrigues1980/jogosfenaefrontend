@@ -29,7 +29,7 @@ import { EditionDto } from './edition-api';
 })
 export class EditionFormDialogComponent {
   form: FormGroup;
-  Editor = ClassicEditor;
+  Editor: any = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,
