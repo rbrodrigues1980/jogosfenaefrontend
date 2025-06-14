@@ -8,8 +8,12 @@ export interface EditionDto {
   createdDateTime: string;
   updatedDateTime: string;
   membershipDate: string;
+  bornFrom: string;
+  bornUntil: string;
   startDateTime: string;
   endDateTime: string;
+  linkExpirationDate: string;
+  link: string;
   title: string;
   description: string;
   email: string;

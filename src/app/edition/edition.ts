@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { EditionFormDialogComponent } from './edition-form-dialog';
 import { EditionApi, EditionDto } from './edition-api';
 
 @Component({
@@ -16,15 +13,12 @@ import { EditionApi, EditionDto } from './edition-api';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
     MatIconModule,
-    MatCardModule
+    MatDialogModule,
+    EditionFormDialogComponent
   ],
   templateUrl: './edition.html',
   styleUrl: './edition.css'
@@ -32,23 +26,7 @@ import { EditionApi, EditionDto } from './edition-api';
 export class EditionComponent implements OnInit {
   editions: EditionDto[] = [];
   displayedColumns = ['title', 'start', 'end', 'actions'];
-  form: FormGroup;
-  editingId?: number;
-  showForm = false;
-
-  constructor(private api: EditionApi, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      createdDateTime: [''],
-      updatedDateTime: [''],
-      membershipDate: [''],
-      startDateTime: [''],
-      endDateTime: [''],
-      title: [''],
-      description: [''],
-      email: [''],
-      currentEdition: [false]
-    });
-  }
+  constructor(private api: EditionApi, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.load();
@@ -59,36 +37,27 @@ export class EditionComponent implements OnInit {
   }
 
   add() {
-    this.editingId = undefined;
-    this.form.reset({ currentEdition: false });
-    this.showForm = true;
+    const dialogRef = this.dialog.open(EditionFormDialogComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.api.create(result).subscribe(() => this.load());
+      }
+    });
   }
 
   edit(item: EditionDto) {
-    this.editingId = item.id;
-    this.form.patchValue(item);
-    this.showForm = true;
+    const dialogRef = this.dialog.open(EditionFormDialogComponent, {
+      data: { edition: item }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && item.id != null) {
+        this.api.update(item.id, result).subscribe(() => this.load());
+      }
+    });
   }
 
-  cancel() {
-    this.showForm = false;
-    this.form.reset();
-  }
-
-  save() {
-    const val = this.form.value as EditionDto;
-    if (this.editingId != null) {
-      this.api.update(this.editingId, val).subscribe(() => {
-        this.load();
-        this.cancel();
-      });
-    } else {
-      this.api.create(val).subscribe(() => {
-        this.load();
-        this.cancel();
-      });
-    }
-  }
 
   delete(item: EditionDto) {
     if (item.id != null && confirm('Excluir esta edição?')) {
