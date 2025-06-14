@@ -17,8 +17,7 @@ import { EditionApi, EditionDto } from './edition-api';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule,
-    EditionFormDialogComponent
+    MatDialogModule
   ],
   templateUrl: './edition.html',
   styleUrls: ['./edition.css']
