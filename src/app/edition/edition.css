@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.menu {
+  width: 200px;
+  padding: 1rem;
+  background: #eee;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.form {
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.actions {
+  margin-top: 1rem;
+}
