@@ -1,4 +1,3 @@
-# jogosfenaefrontend
 # Jogosfenaefrontend
 
 Este repositório contém a aplicação frontend do projeto **Jogos FENAE**
@@ -12,7 +11,8 @@ construída em [Angular](https://angular.dev) na versão estável mais recente.
    ```
 2. Inicie o servidor de desenvolvimento:
    ```bash
-   ng serve
+   npm start
+   # ou use npx ng serve
    ```
    Após iniciar, acesse `http://localhost:4200/` no navegador. O recarregamento
    automático ocorrerá a cada modificação nos arquivos fonte.
@@ -23,13 +23,13 @@ O Angular CLI possui ferramentas poderosas de scaffolding. Para gerar um novo
 component, execute:
 
 ```bash
-ng generate component nome-do-componente
+npx ng generate component nome-do-componente
 ```
 
 Para ver todos os esquemas disponíveis, utilize:
 
 ```bash
-ng generate --help
+npx ng generate --help
 ```
 
 ## Build para produção
@@ -37,7 +37,7 @@ ng generate --help
 Para compilar o projeto em modo de produção, execute:
 
 ```bash
-ng build
+npm run build
 ```
 
 Os artefatos serão salvos no diretório `dist/` com otimizações ativadas.
@@ -48,7 +48,7 @@ Para rodar os testes unitários com
 [Karma](https://karma-runner.github.io), utilize:
 
 ```bash
-ng test
+npm test
 ```
 
 ## Testes end-to-end
@@ -56,7 +56,7 @@ ng test
 Caso deseje realizar testes e2e:
 
 ```bash
-ng e2e
+npx ng e2e
 ```
 
 O Angular CLI não possui um framework de e2e configurado por padrão, então
