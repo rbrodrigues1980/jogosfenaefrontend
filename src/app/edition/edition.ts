@@ -1,17 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { EditionApi, EditionDto } from './edition-api';
 
 @Component({
   selector: 'app-edition',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatCardModule
+  ],
   templateUrl: './edition.html',
   styleUrl: './edition.css'
 })
 export class EditionComponent implements OnInit {
   editions: EditionDto[] = [];
+  displayedColumns = ['title', 'start', 'end', 'actions'];
   form: FormGroup;
   editingId?: number;
   showForm = false;
