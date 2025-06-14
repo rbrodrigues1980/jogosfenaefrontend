@@ -21,7 +21,7 @@ import { EditionApi, EditionDto } from './edition-api';
     EditionFormDialogComponent
   ],
   templateUrl: './edition.html',
-  styleUrl: './edition.css'
+  styleUrls: ['./edition.css']
 })
 export class EditionComponent implements OnInit {
   editions: EditionDto[] = [];

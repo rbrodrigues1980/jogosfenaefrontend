@@ -23,7 +23,7 @@ import { EditionDto } from './edition-api';
     CKEditorModule
   ],
   templateUrl: './edition-form-dialog.html',
-  styleUrl: './edition-form-dialog.css'
+  styleUrls: ['./edition-form-dialog.css']
 })
 export class EditionFormDialogComponent {
   form: FormGroup;
