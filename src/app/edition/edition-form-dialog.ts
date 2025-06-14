@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,10 +38,13 @@ export class EditionFormDialogComponent {
   ) {
     const e = data.edition;
     this.form = this.fb.group({
-      title: [e?.title || ''],
-      startDateTime: [e?.startDateTime || ''],
-      endDateTime: [e?.endDateTime || ''],
-      membershipDate: [e?.membershipDate || ''],
+      title: [
+        e?.title || '',
+        [Validators.required, Validators.minLength(5), Validators.maxLength(255)]
+      ],
+      startDateTime: [e?.startDateTime || '', Validators.required],
+      endDateTime: [e?.endDateTime || '', Validators.required],
+      membershipDate: [e?.membershipDate || '', Validators.required],
       bornFrom: [e?.bornFrom || ''],
       bornUntil: [e?.bornUntil || ''],
       linkExpirationDate: [e?.linkExpirationDate || ''],
@@ -59,6 +62,8 @@ export class EditionFormDialogComponent {
   save() {
     if (this.form.valid) {
       this.dialogRef.close(this.form.value);
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 }

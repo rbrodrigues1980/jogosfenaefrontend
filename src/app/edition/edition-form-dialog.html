@@ -4,20 +4,35 @@
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Título</mat-label>
       <input matInput formControlName="title" />
+      <mat-error *ngIf="form.get('title')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.get('title')?.hasError('minlength') || form.get('title')?.hasError('maxlength')">
+        Título deve ter entre 5 e 255 caracteres
+      </mat-error>
     </mat-form-field>
 
   <div class="row">
     <mat-form-field appearance="fill">
       <mat-label>Início</mat-label>
       <input matInput type="datetime-local" formControlName="startDateTime" />
+      <mat-error *ngIf="form.get('startDateTime')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Fim</mat-label>
       <input matInput type="datetime-local" formControlName="endDateTime" />
+      <mat-error *ngIf="form.get('endDateTime')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Data de Associação</mat-label>
       <input matInput type="date" formControlName="membershipDate" />
+      <mat-error *ngIf="form.get('membershipDate')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
     </mat-form-field>
   </div>
 
