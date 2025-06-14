@@ -18,6 +18,9 @@ construída em [Angular](https://angular.dev) na versão estável mais recente.
    ```
    Após iniciar, acesse `http://localhost:4200/` no navegador. O recarregamento
    automático ocorrerá a cada modificação nos arquivos fonte.
+3. O arquivo `src/environments/environment.ts` define `apiBaseUrl` como
+   `/api`. Isso garante que as requisições passem pelo proxy do Angular,
+   evitando problemas de CORS durante o desenvolvimento.
 
 ## Configuração de domínios por ambiente
 
