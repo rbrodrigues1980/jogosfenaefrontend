@@ -1,71 +1,80 @@
+<mat-toolbar color="primary">Edições</mat-toolbar>
+
 <div class="container">
-  <nav class="menu">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Edições</a></li>
-    </ul>
-  </nav>
-
-  <div class="content">
-    <button (click)="add()">Adicionar</button>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Início</th>
-          <th>Fim</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let e of editions">
-          <td>{{ e.title }}</td>
-          <td>{{ e.startDateTime | date:"dd/MM/yyyy HH'h'mm":'' : 'pt-BR' }}</td>
-          <td>{{ e.endDateTime | date:"dd/MM/yyyy HH'h'mm":'' : 'pt-BR' }}</td>
-          <td>
-            <button (click)="edit(e)">Editar</button>
-            <button (click)="delete(e)">Excluir</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div *ngIf="showForm" class="form">
-      <form [formGroup]="form" (ngSubmit)="save()">
-        <label>
-          Título:
-          <input formControlName="title" />
-        </label>
-        <label>
-          Descrição:
-          <input formControlName="description" />
-        </label>
-        <label>
-          Email:
-          <input formControlName="email" />
-        </label>
-        <label>
-          Data de Associação:
-          <input formControlName="membershipDate" type="date" />
-        </label>
-        <label>
-          Início:
-          <input formControlName="startDateTime" type="datetime-local" />
-        </label>
-        <label>
-          Fim:
-          <input formControlName="endDateTime" type="datetime-local" />
-        </label>
-        <label>
-          Atual:
-          <input formControlName="currentEdition" type="checkbox" />
-        </label>
-        <div class="actions">
-          <button type="submit">Salvar</button>
-          <button type="button" (click)="cancel()">Cancelar</button>
-        </div>
-      </form>
-    </div>
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="add()">Adicionar</button>
   </div>
+
+  <table mat-table [dataSource]="editions" class="mat-elevation-z1 table">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let e">{{ e.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="start">
+      <th mat-header-cell *matHeaderCellDef>Início</th>
+      <td mat-cell *matCellDef="let e">{{ e.startDateTime | date:'dd/MM/yyyy HH:mm':'':'pt-BR' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="end">
+      <th mat-header-cell *matHeaderCellDef>Fim</th>
+      <td mat-cell *matCellDef="let e">{{ e.endDateTime | date:'dd/MM/yyyy HH:mm':'':'pt-BR' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let e">
+        <button mat-icon-button color="primary" (click)="edit(e)">
+          <span class="material-icons">edit</span>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(e)">
+          <span class="material-icons">delete</span>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-card class="form-card" *ngIf="showForm">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Data de Associação</mat-label>
+        <input matInput type="date" formControlName="membershipDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Início</mat-label>
+        <input matInput type="datetime-local" formControlName="startDateTime" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fim</mat-label>
+        <input matInput type="datetime-local" formControlName="endDateTime" />
+      </mat-form-field>
+
+      <mat-checkbox formControlName="currentEdition">Atual</mat-checkbox>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">Salvar</button>
+        <button mat-button type="button" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card>
 </div>
