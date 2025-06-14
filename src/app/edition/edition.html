@@ -37,44 +37,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-card class="form-card" *ngIf="showForm">
-    <form [formGroup]="form" (ngSubmit)="save()">
-      <mat-form-field appearance="fill">
-        <mat-label>Título</mat-label>
-        <input matInput formControlName="title" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Descrição</mat-label>
-        <input matInput formControlName="description" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Data de Associação</mat-label>
-        <input matInput type="date" formControlName="membershipDate" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Início</mat-label>
-        <input matInput type="datetime-local" formControlName="startDateTime" />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Fim</mat-label>
-        <input matInput type="datetime-local" formControlName="endDateTime" />
-      </mat-form-field>
-
-      <mat-checkbox formControlName="currentEdition">Atual</mat-checkbox>
-
-      <div class="actions">
-        <button mat-raised-button color="primary" type="submit">Salvar</button>
-        <button mat-button type="button" (click)="cancel()">Cancelar</button>
-      </div>
-    </form>
-  </mat-card>
 </div>
