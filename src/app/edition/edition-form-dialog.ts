@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditionDto } from './edition-api';
 
 @Component({
@@ -27,6 +28,7 @@ import { EditionDto } from './edition-api';
 })
 export class EditionFormDialogComponent {
   form: FormGroup;
+  Editor = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,
