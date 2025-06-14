@@ -9,13 +9,23 @@ construída em [Angular](https://angular.dev) na versão estável mais recente.
    ```bash
    npm install
    ```
-2. Inicie o servidor de desenvolvimento:
+2. Inicie o servidor de desenvolvimento. A configuração `proxy.conf.json`
+   redireciona as chamadas para `/api` ao backend em `http://localhost:8080`,
+   evitando problemas de CORS:
    ```bash
    npm start
    # ou use npx ng serve
    ```
    Após iniciar, acesse `http://localhost:4200/` no navegador. O recarregamento
    automático ocorrerá a cada modificação nos arquivos fonte.
+
+## Configuração de domínios por ambiente
+
+Os domínios utilizados para as chamadas de API ficam em `src/environments/`.
+Existem arquivos separados para **desenvolvimento**, **homologação** e
+**produção** (`environment.ts`, `environment.hml.ts` e `environment.prod.ts`).
+Durante o build, o Angular substitui o arquivo correto conforme a configuração
+escolhida.
 
 ## Geração de código
 
