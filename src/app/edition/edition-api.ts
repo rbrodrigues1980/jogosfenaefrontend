@@ -20,10 +20,10 @@ export interface EditionDto {
   providedIn: 'root'
 })
 export class EditionApi {
-  // Base URL of the edition API on the backend server.
-  // Loaded from the environment configuration to support
-  // different domains for development, homologation and production.
-  private baseUrl = `${environment.apiBaseUrl}/api/rest/v1/edition`;
+  // Base URL of the edition API. The `apiBaseUrl` already contains the `/api`
+  // prefix for all environments, including development where the Angular
+  // dev-server proxy forwards requests to the backend.
+  private baseUrl = `${environment.apiBaseUrl}/rest/v1/edition`;
 
   constructor(private http: HttpClient) {}
 
