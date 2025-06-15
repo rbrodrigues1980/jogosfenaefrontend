@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog';
 import { EditionFormDialogComponent } from './edition-form-dialog';
 import { EditionApi, EditionDto } from './edition-api';
 import { LoggingService } from '../logging.service';
@@ -64,9 +65,16 @@ export class EditionComponent implements OnInit {
 
 
   delete(item: EditionDto) {
-    if (item.id != null && confirm('Excluir esta edição?')) {
-      this.logger.log('delete edition', { id: item.id });
-      this.api.delete(item.id).subscribe(() => this.load());
+    if (item.id != null) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: { message: 'Excluir esta edição?' }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.logger.log('delete edition', { id: item.id });
+          this.api.delete(item.id!).subscribe(() => this.load());
+        }
+      });
     }
   }
 }
