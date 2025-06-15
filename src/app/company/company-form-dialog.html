@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ data.company ? 'Editar Apcef' : 'Nova Apcef' }}</h2>
+<form [formGroup]="form" class="dialog-form" (ngSubmit)="save()">
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="form.get('title')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Participantes</mat-label>
+        <input matInput type="number" formControlName="participantNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Presidentes</mat-label>
+        <input matInput type="number" formControlName="presidentNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Diretores de Esporte</mat-label>
+        <input matInput type="number" formControlName="sportsDirectorNumber" />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Atletas</mat-label>
+        <input matInput type="number" formControlName="athleteNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Paratletas</mat-label>
+        <input matInput type="number" formControlName="parathleteNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Técnicos</mat-label>
+        <input matInput type="number" formControlName="technicalNumber" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>ID da Edição</mat-label>
+      <input matInput formControlName="editionId" />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end" class="actions">
+    <button mat-raised-button color="primary" type="submit">Salvar</button>
+    <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  </div>
+</form>

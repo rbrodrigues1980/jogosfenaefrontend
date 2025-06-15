@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/" aria-label="Voltar para página inicial">
+    <span class="material-icons">home</span>
+  </button>
+  <span class="toolbar-title">APCEFs</span>
+</mat-toolbar>
+
+<div class="container">
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="add()">Adicionar</button>
+  </div>
+
+  <table mat-table [dataSource]="companies" class="mat-elevation-z1 table">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let c">{{ c.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="edition">
+      <th mat-header-cell *matHeaderCellDef>Edição</th>
+      <td mat-cell *matCellDef="let c">{{ c.edition?.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let c">
+        <button mat-icon-button color="primary" (click)="edit(c)">
+          <span class="material-icons">edit</span>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(c)">
+          <span class="material-icons">delete</span>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
