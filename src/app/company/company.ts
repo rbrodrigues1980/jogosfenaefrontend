@@ -49,6 +49,8 @@ export class CompanyComponent implements OnInit {
 
   load() {
     this.logger.log('list companies');
+    // Clear the current list so old data is not displayed if the request fails
+    this.companies = [];
     if (this.editionId) {
       this.api
         .listByEdition(this.editionId)
