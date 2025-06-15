@@ -38,13 +38,9 @@
         <input matInput type="number" formControlName="technicalNumber" />
       </mat-form-field>
     </div>
-
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>ID da Edição</mat-label>
-      <input matInput formControlName="editionId" [disabled]="!!data.editionId" />
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions align="end" class="actions">
+      <input type="hidden" formControlName="editionId" />
+    </div>
+    <div mat-dialog-actions align="end" class="actions">
     <button mat-raised-button color="primary" type="submit">Salvar</button>
     <button mat-button type="button" (click)="cancel()">Cancelar</button>
   </div>
