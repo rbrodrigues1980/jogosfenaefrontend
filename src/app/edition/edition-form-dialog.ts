@@ -79,23 +79,26 @@ export class EditionFormDialogComponent {
     private dialogRef: MatDialogRef<EditionFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { edition?: EditionDto }
   ) {
-    const e = data.edition;
-    this.form = this.fb.group({
-      title: [
-        e?.title || '',
-        [Validators.required, Validators.minLength(5), Validators.maxLength(255)]
-      ],
-      startDateTime: [e?.startDateTime || '', Validators.required],
-      endDateTime: [e?.endDateTime || '', Validators.required],
-      membershipDate: [e?.membershipDate || '', Validators.required],
-      bornFrom: [e?.bornFrom || ''],
-      bornUntil: [e?.bornUntil || ''],
-      linkExpirationDate: [e?.linkExpirationDate || ''],
-      link: [e?.link || ''],
-      description: [e?.description || ''],
-      email: [e?.email || ''],
-      currentEdition: [e?.currentEdition || false]
-    }, { validators: [startBeforeEndValidator, bornRangeValidator] });
+    this.form = this.fb.group(
+      {
+        title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        startDateTime: ['', Validators.required],
+        endDateTime: ['', Validators.required],
+        membershipDate: ['', Validators.required],
+        bornFrom: [''],
+        bornUntil: [''],
+        linkExpirationDate: [''],
+        link: [''],
+        description: [''],
+        email: [''],
+        currentEdition: [false]
+      },
+      { validators: [startBeforeEndValidator, bornRangeValidator] }
+    );
+
+    if (data.edition) {
+      this.form.patchValue(data.edition);
+    }
   }
 
   cancel() {
