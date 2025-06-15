@@ -3,7 +3,11 @@
   <div mat-dialog-content>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Título</mat-label>
-      <input matInput formControlName="title" />
+      <mat-select formControlName="title">
+        <mat-option *ngFor="let option of apcefOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
       <mat-error *ngIf="form.get('title')?.hasError('required')">
         Campo obrigatório
       </mat-error>
