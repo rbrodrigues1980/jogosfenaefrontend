@@ -41,7 +41,7 @@
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>ID da Edição</mat-label>
-      <input matInput formControlName="editionId" />
+      <input matInput formControlName="editionId" [disabled]="data.editionId" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions align="end" class="actions">

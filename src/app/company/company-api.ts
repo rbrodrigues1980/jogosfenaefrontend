@@ -30,6 +30,10 @@ export class CompanyApi {
     return this.http.get<CompanyDto[]>(this.baseUrl);
   }
 
+  listByEdition(editionId: string): Observable<CompanyDto[]> {
+    return this.http.get<CompanyDto[]>(`${this.baseUrl}?editionId=${editionId}`);
+  }
+
   get(id: string): Observable<CompanyDto> {
     return this.http.get<CompanyDto>(`${this.baseUrl}/${id}`);
   }

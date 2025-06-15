@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home';
 
 export const routes: Routes = [
   { path: 'edition', component: EditionComponent },
+  { path: 'company/:editionId', component: CompanyComponent },
   { path: 'company', component: CompanyComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '' }
