@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog';
 import { EditionFormDialogComponent } from './edition-form-dialog';
 import { EditionApi, EditionDto } from './edition-api';
@@ -19,7 +20,8 @@ import { LoggingService } from '../logging.service';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    RouterModule
   ],
   templateUrl: './edition.html',
   styleUrls: ['./edition.css']
