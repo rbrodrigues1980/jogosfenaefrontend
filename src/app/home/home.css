@@ -1,0 +1,21 @@
+.hero {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  background: linear-gradient(45deg, #e3f2fd, #bbdefb);
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+p {
+  font-size: 1.25rem;
+  margin: 0;
+}
