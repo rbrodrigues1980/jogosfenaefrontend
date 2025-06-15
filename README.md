@@ -80,24 +80,6 @@ fique à vontade para escolher o que melhor se adequa ao projeto.
 Consulte a [documentação do Angular CLI](https://angular.dev/tools/cli) para
 mais informações sobre os comandos disponíveis.
 
-## Salvando logs do navegador
-
-O serviço `LoggingService` captura diversas ações da aplicação e armazena os
-eventos no `localStorage`. Para salvar esses registros em um arquivo
-`loginfo.log`, é possível chamar o método `downloadLogs()` do serviço a partir
-de qualquer componente ou pelo console do navegador:
-
-```ts
-constructor(private logger: LoggingService) {}
-
-salvarLogs() {
-  this.logger.downloadLogs();
-}
-```
-
-Um arquivo `loginfo.log` será gerado com o conteúdo dos logs coletados durante
-a navegação.
-
 
 ### Nota sobre arquivos binários
 
