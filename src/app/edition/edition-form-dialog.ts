@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,24 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditionDto } from './edition-api';
+
+const startBeforeEndValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  const start = group.get('startDateTime')?.value;
+  const end = group.get('endDateTime')?.value;
+  if (start && end && new Date(start) > new Date(end)) {
+    return { startAfterEnd: true };
+  }
+  return null;
+};
+
+const bornRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  const from = group.get('bornFrom')?.value;
+  const until = group.get('bornUntil')?.value;
+  if (from && until && new Date(from) > new Date(until)) {
+    return { bornRangeInvalid: true };
+  }
+  return null;
+};
 
 @Component({
   selector: 'app-edition-form-dialog',
@@ -52,7 +70,7 @@ export class EditionFormDialogComponent {
       description: [e?.description || ''],
       email: [e?.email || ''],
       currentEdition: [e?.currentEdition || false]
-    });
+    }, { validators: [startBeforeEndValidator, bornRangeValidator] });
   }
 
   cancel() {
