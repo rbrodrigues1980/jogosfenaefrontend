@@ -54,7 +54,10 @@ export class CompanyComponent implements OnInit {
     if (this.editionId) {
       this.api
         .listByEdition(this.editionId)
-        .subscribe(data => (this.companies = data));
+        .subscribe(
+          data =>
+            (this.companies = data.filter(c => c.edition?.id === this.editionId))
+        );
     } else {
       this.api.list().subscribe(data => (this.companies = data));
     }
