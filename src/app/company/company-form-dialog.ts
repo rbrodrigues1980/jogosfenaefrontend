@@ -28,7 +28,8 @@ export class CompanyFormDialogComponent {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CompanyFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { company?: CompanyDto },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { company?: CompanyDto; editionId?: string },
     private logger: LoggingService
   ) {
     this.form = this.fb.group({
@@ -44,6 +45,9 @@ export class CompanyFormDialogComponent {
 
     if (data.company) {
       this.form.patchValue({ ...data.company, editionId: data.company.edition?.id });
+    }
+    if (data.editionId) {
+      this.form.patchValue({ editionId: data.editionId });
     }
   }
 

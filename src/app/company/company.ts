@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog';
 import { CompanyFormDialogComponent } from './company-form-dialog';
 import { CompanyApi, CompanyDto } from './company-api';
@@ -29,25 +29,44 @@ import { LoggingService } from '../logging.service';
 export class CompanyComponent implements OnInit {
   companies: CompanyDto[] = [];
   displayedColumns = ['title', 'edition', 'actions'];
+  editionId?: string | null;
 
-  constructor(private api: CompanyApi, private dialog: MatDialog, private logger: LoggingService) {}
+  constructor(
+    private api: CompanyApi,
+    private dialog: MatDialog,
+    private logger: LoggingService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.logger.log('company component init');
-    this.load();
+    this.route.paramMap.subscribe(params => {
+      this.editionId = params.get('editionId');
+      this.logger.log('editionId param', this.editionId);
+      this.load();
+    });
   }
 
   load() {
     this.logger.log('list companies');
-    this.api.list().subscribe(data => (this.companies = data));
+    if (this.editionId) {
+      this.api
+        .listByEdition(this.editionId)
+        .subscribe(data => (this.companies = data));
+    } else {
+      this.api.list().subscribe(data => (this.companies = data));
+    }
   }
 
   add() {
-    const dialogRef = this.dialog.open(CompanyFormDialogComponent, { data: {} });
+    const dialogRef = this.dialog.open(CompanyFormDialogComponent, {
+      data: { editionId: this.editionId ?? undefined }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.logger.log('create company', result);
-        this.api.create(result.editionId, result).subscribe(() => this.load());
+        const editionId = this.editionId ?? result.editionId;
+        this.api.create(editionId, result).subscribe(() => this.load());
       }
     });
   }
