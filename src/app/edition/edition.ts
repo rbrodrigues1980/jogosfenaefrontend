@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { EditionFormDialogComponent } from './edition-form-dialog';
 import { EditionApi, EditionDto } from './edition-api';
+import { LoggingService } from '../logging.service';
 
 @Component({
   selector: 'app-edition',
@@ -25,13 +26,15 @@ import { EditionApi, EditionDto } from './edition-api';
 export class EditionComponent implements OnInit {
   editions: EditionDto[] = [];
   displayedColumns = ['title', 'start', 'end', 'actions'];
-  constructor(private api: EditionApi, private dialog: MatDialog) {}
+  constructor(private api: EditionApi, private dialog: MatDialog, private logger: LoggingService) {}
 
   ngOnInit() {
+    this.logger.log('edition component init');
     this.load();
   }
 
   load() {
+    this.logger.log('list editions');
     this.api.list().subscribe(data => (this.editions = data));
   }
 
@@ -41,6 +44,7 @@ export class EditionComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.logger.log('create edition', result);
         this.api.create(result).subscribe(() => this.load());
       }
     });
@@ -52,6 +56,7 @@ export class EditionComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && item.id != null) {
+        this.logger.log('update edition', { id: item.id, ...result });
         this.api.update(item.id, result).subscribe(() => this.load());
       }
     });
@@ -60,6 +65,7 @@ export class EditionComponent implements OnInit {
 
   delete(item: EditionDto) {
     if (item.id != null && confirm('Excluir esta edição?')) {
+      this.logger.log('delete edition', { id: item.id });
       this.api.delete(item.id).subscribe(() => this.load());
     }
   }

@@ -22,6 +22,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditionDto } from './edition-api';
+import { LoggingService } from '../logging.service';
 
 const startBeforeEndValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const start = group.get('startDateTime')?.value;
@@ -77,7 +78,8 @@ export class EditionFormDialogComponent {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditionFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { edition?: EditionDto }
+    @Inject(MAT_DIALOG_DATA) public data: { edition?: EditionDto },
+    private logger: LoggingService
   ) {
     this.form = this.fb.group(
       {
@@ -102,11 +104,13 @@ export class EditionFormDialogComponent {
   }
 
   cancel() {
+    this.logger.log('cancel edition dialog');
     this.dialogRef.close();
   }
 
   save() {
     if (this.form.valid) {
+      this.logger.log('save edition dialog', this.form.value);
       this.dialogRef.close(this.form.value);
     } else {
       this.form.markAllAsTouched();

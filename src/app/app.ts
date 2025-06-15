@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoggingService } from './logging.service';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,4 +10,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected title = 'jogosfenaefrontend';
+  constructor(private logger: LoggingService) {
+    this.logger.log('app init');
+  }
 }
