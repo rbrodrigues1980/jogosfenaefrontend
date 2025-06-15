@@ -1,11 +1,23 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  ReactiveFormsModule,
+  NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -29,6 +41,17 @@ const bornRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErro
   return null;
 };
 
+class CrossFieldErrorMatcher implements ErrorStateMatcher {
+  constructor(private errorKey: string) {}
+
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.touched);
+    const parent = control?.parent;
+    const invalidParent = !!(parent && parent.hasError(this.errorKey) && parent.touched);
+    return invalidCtrl || invalidParent;
+  }
+}
+
 @Component({
   selector: 'app-edition-form-dialog',
   standalone: true,
@@ -48,6 +71,8 @@ const bornRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErro
 export class EditionFormDialogComponent {
   form: FormGroup;
   Editor: any = ClassicEditor;
+  startEndMatcher = new CrossFieldErrorMatcher('startAfterEnd');
+  bornRangeMatcher = new CrossFieldErrorMatcher('bornRangeInvalid');
 
   constructor(
     private fb: FormBuilder,
