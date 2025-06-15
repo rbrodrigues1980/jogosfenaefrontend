@@ -15,7 +15,7 @@
   <div class="row">
     <mat-form-field appearance="fill">
       <mat-label>Início</mat-label>
-      <input matInput type="datetime-local" formControlName="startDateTime" />
+      <input matInput type="datetime-local" formControlName="startDateTime" [errorStateMatcher]="startEndMatcher" />
       <mat-error *ngIf="form.get('startDateTime')?.hasError('required')">
         Campo obrigatório
       </mat-error>
@@ -25,7 +25,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Fim</mat-label>
-      <input matInput type="datetime-local" formControlName="endDateTime" />
+      <input matInput type="datetime-local" formControlName="endDateTime" [errorStateMatcher]="startEndMatcher" />
       <mat-error *ngIf="form.get('endDateTime')?.hasError('required')">
         Campo obrigatório
       </mat-error>
@@ -42,11 +42,11 @@
   <div class="row">
     <mat-form-field appearance="fill">
       <mat-label>Nascidos De</mat-label>
-      <input matInput type="date" formControlName="bornFrom" />
+      <input matInput type="date" formControlName="bornFrom" [errorStateMatcher]="bornRangeMatcher" />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Nascidos Até</mat-label>
-      <input matInput type="date" formControlName="bornUntil" />
+      <input matInput type="date" formControlName="bornUntil" [errorStateMatcher]="bornRangeMatcher" />
       <mat-error *ngIf="form.hasError('bornRangeInvalid')">
         Data inicial de nascimento deve ser anterior ou igual à data final
       </mat-error>
