@@ -22,3 +22,7 @@
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
+.toolbar-title {
+  margin-left: 0.5rem;
+}
