@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyDto } from './company-api';
 import { LoggingService } from '../logging.service';
@@ -17,6 +18,7 @@ import { LoggingService } from '../logging.service';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatButtonModule
   ],
   templateUrl: './company-form-dialog.html',
@@ -24,6 +26,35 @@ import { LoggingService } from '../logging.service';
 })
 export class CompanyFormDialogComponent {
   form: FormGroup;
+  apcefOptions = [
+    { value: 'APCEFAC', label: 'APCEF/AC' },
+    { value: 'APCEFAL', label: 'APCEF/AL' },
+    { value: 'APCEFAM', label: 'APCEF/AM' },
+    { value: 'APCEFAP', label: 'APCEF/AP' },
+    { value: 'APCEFBA', label: 'APCEF/BA' },
+    { value: 'APCEFCE', label: 'APCEF/CE' },
+    { value: 'APCEFDF', label: 'APCEF/DF' },
+    { value: 'APCEFES', label: 'APCEF/ES' },
+    { value: 'APCEFGO', label: 'APCEF/GO' },
+    { value: 'APCEFMA', label: 'APCEF/MA' },
+    { value: 'APCEFMG', label: 'APCEF/MG' },
+    { value: 'APCEFMS', label: 'APCEF/MS' },
+    { value: 'APCEFMT', label: 'APCEF/MT' },
+    { value: 'APCEFPA', label: 'APCEF/PA' },
+    { value: 'APCEFPB', label: 'APCEF/PB' },
+    { value: 'APCEFPE', label: 'APCEF/PE' },
+    { value: 'APCEFPI', label: 'APCEF/PI' },
+    { value: 'APCEFPR', label: 'APCEF/PR' },
+    { value: 'APCEFRJ', label: 'APCEF/RJ' },
+    { value: 'APCEFRN', label: 'APCEF/RN' },
+    { value: 'APCEFRO', label: 'APCEF/RO' },
+    { value: 'APCEFRR', label: 'APCEF/RR' },
+    { value: 'APCEFRS', label: 'APCEF/RS' },
+    { value: 'APCEFSC', label: 'APCEF/SC' },
+    { value: 'APCEFSE', label: 'APCEF/SE' },
+    { value: 'APCEFSP', label: 'APCEF/SP' },
+    { value: 'APCEFTO', label: 'APCEF/TO' }
+  ];
 
   constructor(
     private fb: FormBuilder,
