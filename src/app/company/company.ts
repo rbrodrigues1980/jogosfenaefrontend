@@ -68,7 +68,7 @@ export class CompanyComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.logger.log('delete company', { id: item.id });
-          this.api.delete(item.id).subscribe(() => this.load());
+          this.api.delete(item.id!).subscribe(() => this.load());
         }
       });
     }
