@@ -29,7 +29,12 @@ import { LoggingService } from '../logging.service';
 })
 export class CompanyComponent implements OnInit {
   companies: CompanyDto[] = [];
-  displayedColumns = ['title', 'edition', 'actions'];
+  displayedColumns = [
+    'title',
+    'participantNumber',
+    'edition',
+    'actions'
+  ];
   editionId?: string | null;
 
   constructor(

@@ -3,7 +3,7 @@
     <span class="material-icons">home</span>
   </button>
   <button mat-button routerLink="/edition">Voltar</button>
-  <span class="toolbar-title">APCEFs</span>
+  <span class="toolbar-title">Apcefs</span>
 </mat-toolbar>
 
 <div class="container">
@@ -20,6 +20,11 @@
     <ng-container matColumnDef="edition">
       <th mat-header-cell *matHeaderCellDef>Edição</th>
       <td mat-cell *matCellDef="let c">{{ c.edition?.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="participantNumber">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let c">{{ c.participantNumber }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
