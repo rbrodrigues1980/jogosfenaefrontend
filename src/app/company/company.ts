@@ -71,7 +71,10 @@ export class CompanyComponent implements OnInit {
       if (result) {
         this.logger.log('create company', result);
         const editionId = this.editionId ?? result.editionId;
-        this.api.create(editionId, result).subscribe(() => this.load());
+        this.api.create(editionId, result).subscribe({
+          next: () => this.load(),
+          error: err => alert(err.error?.message || 'Erro ao criar APCEF')
+        });
       }
     });
   }
@@ -81,7 +84,10 @@ export class CompanyComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && item.id) {
         this.logger.log('update company', { id: item.id, ...result });
-        this.api.update(item.id, result).subscribe(() => this.load());
+        this.api.update(item.id, result).subscribe({
+          next: () => this.load(),
+          error: err => alert(err.error?.message || 'Erro ao atualizar APCEF')
+        });
       }
     });
   }
