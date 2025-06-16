@@ -3,7 +3,7 @@
   <div mat-dialog-content>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Título</mat-label>
-      <mat-select formControlName="title">
+      <mat-select formControlName="title" [disabled]="data.company">
         <mat-option *ngFor="let option of apcefOptions" [value]="option.value">
           {{ option.label }}
         </mat-option>
