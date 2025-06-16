@@ -8,6 +8,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog';
 import { CompanyFormDialogComponent } from './company-form-dialog';
+import { MessageDialogComponent } from '../message-dialog/message-dialog';
 import { CompanyApi, CompanyDto } from './company-api';
 import { LoggingService } from '../logging.service';
 
@@ -73,7 +74,11 @@ export class CompanyComponent implements OnInit {
         const editionId = this.editionId ?? result.editionId;
         this.api.create(editionId, result).subscribe({
           next: () => this.load(),
-          error: err => alert(err.error?.message || 'Erro ao criar APCEF')
+          error: err => {
+            const dialogRef = this.dialog.open(MessageDialogComponent, {
+              data: { message: err.error?.message || 'Erro ao criar APCEF' }
+            });
+          }
         });
       }
     });
@@ -86,7 +91,11 @@ export class CompanyComponent implements OnInit {
         this.logger.log('update company', { id: item.id, ...result });
         this.api.update(item.id, result).subscribe({
           next: () => this.load(),
-          error: err => alert(err.error?.message || 'Erro ao atualizar APCEF')
+          error: err => {
+            const dialogRef = this.dialog.open(MessageDialogComponent, {
+              data: { message: err.error?.message || 'Erro ao atualizar APCEF' }
+            });
+          }
         });
       }
     });
