@@ -77,6 +77,7 @@ export class CompanyFormDialogComponent {
 
     if (data.company) {
       this.form.patchValue({ ...data.company, editionId: data.company.edition?.id });
+      this.form.get('title')?.disable();
     }
     if (data.editionId) {
       this.form.patchValue({ editionId: data.editionId });
@@ -90,8 +91,9 @@ export class CompanyFormDialogComponent {
 
   save() {
     if (this.form.valid) {
-      this.logger.log('save company dialog', this.form.value);
-      this.dialogRef.close(this.form.value);
+      const value = this.form.getRawValue();
+      this.logger.log('save company dialog', value);
+      this.dialogRef.close(value);
     } else {
       this.form.markAllAsTouched();
     }
