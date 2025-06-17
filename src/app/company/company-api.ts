@@ -39,11 +39,15 @@ export class CompanyApi {
   }
 
   create(editionId: string, company: CompanyDto): Observable<CompanyDto> {
-    return this.http.post<CompanyDto>(`${this.baseUrl}?editionId=${editionId}`, company);
+    return this.http.post<CompanyDto>(`${this.baseUrl}?editionId=${editionId}`, company, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   update(id: string, company: CompanyDto): Observable<CompanyDto> {
-    return this.http.put<CompanyDto>(`${this.baseUrl}/${id}`, company);
+    return this.http.put<CompanyDto>(`${this.baseUrl}/${id}`, company, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   delete(id: string): Observable<void> {

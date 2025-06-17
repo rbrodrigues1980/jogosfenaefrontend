@@ -40,11 +40,15 @@ export class EditionApi {
   }
 
   create(edition: EditionDto): Observable<EditionDto> {
-    return this.http.post<EditionDto>(this.baseUrl, edition);
+    return this.http.post<EditionDto>(this.baseUrl, edition, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   update(id: number, edition: EditionDto): Observable<EditionDto> {
-    return this.http.put<EditionDto>(`${this.baseUrl}/${id}`, edition);
+    return this.http.put<EditionDto>(`${this.baseUrl}/${id}`, edition, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   delete(id: number): Observable<void> {
