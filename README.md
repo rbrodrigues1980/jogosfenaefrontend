@@ -10,7 +10,7 @@ construída em [Angular](https://angular.dev) na versão estável mais recente.
    npm install
    ```
 2. Inicie o servidor de desenvolvimento. A configuração `proxy.conf.json`
-   redireciona as chamadas para `/api` ao backend em `http://localhost:8080`,
+   redireciona as chamadas para `/api` ao backend em `http://localhost:8888`,
    evitando problemas de CORS:
    ```bash
    npm start
