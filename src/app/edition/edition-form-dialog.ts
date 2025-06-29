@@ -126,11 +126,26 @@ export class EditionFormDialogComponent implements OnDestroy {
 
   private toBackendDateTime(value: string): string {
     if (!value) return value;
+    // Se já estiver no formato correto (com espaço e segundos), retorna como está
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
+      return value;
+    }
     // Se vier no formato yyyy-MM-ddTHH:mm ou yyyy-MM-ddTHH:mm:ss
-    // Troca o 'T' por espaço
-    let [date, time] = value.split('T');
-    if (time && time.length === 5) time += ':00'; // adiciona segundos se não houver
-    return `${date} ${time}`;
+    if (value.includes('T')) {
+      let [date, time] = value.split('T');
+      if (!time) return date; // só a data
+      if (time.length === 5) time += ':00'; // adiciona segundos se não houver
+      return `${date} ${time}`;
+    }
+    // Se vier só a data
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return value;
+    }
+    // Se vier no formato yyyy-MM-dd HH:mm
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(value)) {
+      return value + ':00';
+    }
+    return value;
   }
 
   private formatDatesForBackend(data: any): any {
