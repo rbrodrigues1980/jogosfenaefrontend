@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { httpLogInterceptor } from './http-log.interceptor';
+import { mockApiInterceptor } from './shared/interceptors/mock-api.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

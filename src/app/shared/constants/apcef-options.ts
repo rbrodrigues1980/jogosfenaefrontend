@@ -1,0 +1,32 @@
+import { ApcefOption } from '../types/common';
+
+export const APCEF_OPTIONS: ApcefOption[] = [
+  { value: 'APCEF/AC', label: 'APCEF/AC' },
+  { value: 'APCEF/AL', label: 'APCEF/AL' },
+  { value: 'APCEF/AM', label: 'APCEF/AM' },
+  { value: 'APCEF/AP', label: 'APCEF/AP' },
+  { value: 'APCEF/BA', label: 'APCEF/BA' },
+  { value: 'APCEF/CE', label: 'APCEF/CE' },
+  { value: 'APCEF/DF', label: 'APCEF/DF' },
+  { value: 'APCEF/ES', label: 'APCEF/ES' },
+  { value: 'APCEF/GO', label: 'APCEF/GO' },
+  { value: 'APCEF/MA', label: 'APCEF/MA' },
+  { value: 'APCEF/MG', label: 'APCEF/MG' },
+  { value: 'APCEF/MS', label: 'APCEF/MS' },
+  { value: 'APCEF/MT', label: 'APCEF/MT' },
+  { value: 'APCEF/PA', label: 'APCEF/PA' },
+  { value: 'APCEF/PB', label: 'APCEF/PB' },
+  { value: 'APCEF/PE', label: 'APCEF/PE' },
+  { value: 'APCEF/PI', label: 'APCEF/PI' },
+  { value: 'APCEF/PR', label: 'APCEF/PR' },
+  { value: 'APCEF/RJ', label: 'APCEF/RJ' },
+  { value: 'APCEF/RN', label: 'APCEF/RN' },
+  { value: 'APCEF/RO', label: 'APCEF/RO' },
+  { value: 'APCEF/RR', label: 'APCEF/RR' },
+  { value: 'APCEF/RS', label: 'APCEF/RS' },
+  { value: 'APCEF/SC', label: 'APCEF/SC' },
+  { value: 'APCEF/SE', label: 'APCEF/SE' },
+  { value: 'APCEF/SP', label: 'APCEF/SP' },
+  { value: 'APCEF/TO', label: 'APCEF/TO' },
+  { value: 'FENAE', label: 'FENAE' }
+];

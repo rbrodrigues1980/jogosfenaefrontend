@@ -1,57 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-
-export interface EditionDto {
-  id?: number;
-  createdDateTime: string;
-  updatedDateTime: string;
-  membershipDate: string;
-  bornFrom: string;
-  bornUntil: string;
-  startDateTime: string;
-  endDateTime: string;
-  linkExpirationDate: string;
-  link: string;
-  title: string;
-  description: string;
-  email: string;
-  currentEdition: boolean;
-}
+import { BaseApiService } from '../shared/services/base-api.service';
+import { EditionDto } from '../shared/types/common';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EditionApi {
-  // Base URL of the edition API. The `apiBaseUrl` already contains the `/api`
-  // prefix for all environments, including development where the Angular
-  // dev-server proxy forwards requests to the backend.
-  private baseUrl = `${environment.apiBaseUrl}/rest/v1/edition`;
+export class EditionApi extends BaseApiService<EditionDto> {
+  protected endpoint = 'edition';
 
-  constructor(private http: HttpClient) {}
-
-  list(): Observable<EditionDto[]> {
-    return this.http.get<EditionDto[]>(this.baseUrl);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
-  get(id: number): Observable<EditionDto> {
-    return this.http.get<EditionDto>(`${this.baseUrl}/${id}`);
+  // Métodos específicos da Edition podem ser adicionados aqui
+  getCurrentEdition(): Observable<EditionDto | null> {
+    return this.http.get<EditionDto | null>(`${this.baseUrl}/current`);
   }
 
-  create(edition: EditionDto): Observable<EditionDto> {
-    return this.http.post<EditionDto>(this.baseUrl, edition, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  update(id: number, edition: EditionDto): Observable<EditionDto> {
-    return this.http.put<EditionDto>(`${this.baseUrl}/${id}`, edition, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  setCurrentEdition(id: number): Observable<EditionDto> {
+    return this.http.put<EditionDto>(`${this.baseUrl}/${id}/current`, {});
   }
 }

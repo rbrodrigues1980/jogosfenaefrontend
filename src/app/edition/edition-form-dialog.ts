@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -9,7 +9,6 @@ import {
   ReactiveFormsModule,
   NgForm,
   ValidationErrors,
-  ValidatorFn,
   Validators
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -21,26 +20,10 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { EditionDto } from './edition-api';
+import { Subject, takeUntil } from 'rxjs';
+import { EditionDto } from '../shared/types/common';
+import { CustomValidators } from '../shared/validators/custom-validators';
 import { LoggingService } from '../logging.service';
-
-const startBeforeEndValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-  const start = group.get('startDateTime')?.value;
-  const end = group.get('endDateTime')?.value;
-  if (start && end && new Date(start) > new Date(end)) {
-    return { startAfterEnd: true };
-  }
-  return null;
-};
-
-const bornRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-  const from = group.get('bornFrom')?.value;
-  const until = group.get('bornUntil')?.value;
-  if (from && until && new Date(from) > new Date(until)) {
-    return { bornRangeInvalid: true };
-  }
-  return null;
-};
 
 class CrossFieldErrorMatcher implements ErrorStateMatcher {
   constructor(private errorKey: string) {}
@@ -69,11 +52,13 @@ class CrossFieldErrorMatcher implements ErrorStateMatcher {
   templateUrl: './edition-form-dialog.html',
   styleUrls: ['./edition-form-dialog.css']
 })
-export class EditionFormDialogComponent {
+export class EditionFormDialogComponent implements OnDestroy {
   form: FormGroup;
   Editor: any = ClassicEditor;
   startEndMatcher = new CrossFieldErrorMatcher('startAfterEnd');
-  bornRangeMatcher = new CrossFieldErrorMatcher('bornRangeInvalid');
+  bornRangeMatcher = new CrossFieldErrorMatcher('invalidDateRange');
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -81,39 +66,89 @@ export class EditionFormDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { edition?: EditionDto },
     private logger: LoggingService
   ) {
-    this.form = this.fb.group(
+    this.form = this.createForm();
+    this.patchFormData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  cancel(): void {
+    this.logger.log('cancel edition dialog');
+    this.dialogRef.close();
+  }
+
+  save(): void {
+    if (this.form.valid) {
+      this.logger.log('save edition dialog', this.form.value);
+      const formattedData = this.formatDatesForBackend(this.form.value);
+      this.dialogRef.close(formattedData);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  private createForm(): FormGroup {
+    return this.fb.group(
       {
-        title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        title: ['', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(255)
+        ]],
         startDateTime: ['', Validators.required],
         endDateTime: ['', Validators.required],
         membershipDate: ['', Validators.required],
         bornFrom: [''],
         bornUntil: [''],
         linkExpirationDate: [''],
-        link: [''],
+        link: ['', CustomValidators.validUrl()],
         description: [''],
-        email: [''],
+        email: ['', CustomValidators.validEmail()],
         currentEdition: [false]
       },
-      { validators: [startBeforeEndValidator, bornRangeValidator] }
+      {
+        validators: [
+          CustomValidators.startBeforeEnd('startDateTime', 'endDateTime'),
+          CustomValidators.validDateRange('bornFrom', 'bornUntil')
+        ]
+      }
     );
+  }
 
-    if (data.edition) {
-      this.form.patchValue(data.edition);
+  private patchFormData(): void {
+    if (this.data.edition) {
+      this.form.patchValue(this.data.edition);
     }
   }
 
-  cancel() {
-    this.logger.log('cancel edition dialog');
-    this.dialogRef.close();
+  private toBackendDateTime(value: string): string {
+    if (!value) return value;
+    // Se vier no formato yyyy-MM-ddTHH:mm ou yyyy-MM-ddTHH:mm:ss
+    // Troca o 'T' por espaço
+    let [date, time] = value.split('T');
+    if (time && time.length === 5) time += ':00'; // adiciona segundos se não houver
+    return `${date} ${time}`;
   }
 
-  save() {
-    if (this.form.valid) {
-      this.logger.log('save edition dialog', this.form.value);
-      this.dialogRef.close(this.form.value);
-    } else {
-      this.form.markAllAsTouched();
+  private formatDatesForBackend(data: any): any {
+    const formatted = { ...data };
+
+    // Formata campos de data/hora para o formato esperado pelo backend Java
+    if (formatted.startDateTime) {
+      formatted.startDateTime = this.toBackendDateTime(formatted.startDateTime);
     }
+
+    if (formatted.endDateTime) {
+      formatted.endDateTime = this.toBackendDateTime(formatted.endDateTime);
+    }
+
+    if (formatted.linkExpirationDate) {
+      formatted.linkExpirationDate = this.toBackendDateTime(formatted.linkExpirationDate);
+    }
+
+    return formatted;
   }
 }
