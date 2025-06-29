@@ -102,7 +102,9 @@ export class CompanyComponent implements OnInit, OnDestroy {
         if (result) {
           this.logger.log('create company', result);
           const editionId = this.editionId ?? result.editionId;
-          this.api.createWithEdition(editionId, result)
+          // Remover editionId do corpo antes de enviar para a API
+          const { editionId: _editionId, ...companyData } = result;
+          this.api.createWithEdition(editionId, companyData)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: () => {
@@ -125,7 +127,9 @@ export class CompanyComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         if (result && item.id) {
           this.logger.log('update company', { id: item.id, ...result });
-          this.api.update(item.id, result)
+          // Remover editionId do corpo antes de enviar para a API
+          const { editionId, ...companyData } = result;
+          this.api.update(item.id, companyData)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: () => {

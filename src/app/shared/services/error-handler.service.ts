@@ -38,14 +38,23 @@ export class ErrorHandlerService {
 
   private extractErrorMessage(error: any): string {
     if (typeof error === 'string') {
+      if (error.includes('Unrecognized field "editionId"')) {
+        return 'Já existe uma Apcef cadastrada para esta edição.';
+      }
       return error;
     }
 
     if (error?.error?.message) {
+      if (error.error.message.includes('Unrecognized field "editionId"')) {
+        return 'Já existe uma Apcef cadastrada para esta edição.';
+      }
       return error.error.message;
     }
 
     if (error?.message) {
+      if (error.message.includes('Unrecognized field "editionId"')) {
+        return 'Já existe uma Apcef cadastrada para esta edição.';
+      }
       return error.message;
     }
 

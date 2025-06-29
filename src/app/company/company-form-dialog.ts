@@ -62,7 +62,8 @@ export class CompanyFormDialogComponent implements OnDestroy {
     if (this.form.valid) {
       const value = this.form.getRawValue();
       this.logger.log('save company dialog', value);
-      this.dialogRef.close(value);
+      const { editionId, ...companyData } = value;
+      this.dialogRef.close({ ...companyData, editionId });
     } else {
       this.form.markAllAsTouched();
     }
